@@ -20,7 +20,7 @@ class Event {
   void end() {}
 }
 
-abstract class ObjectPool<T> {
+abstract class ObjectPool<T extends Entity> {
   int arm;
   ArrayList<T> ar;
 
@@ -28,6 +28,14 @@ abstract class ObjectPool<T> {
     arm = 0;
     ar = new ArrayList<T>();
   }
+
+ 	// void set(Node node, PVector p) {
+	// 	node.p.reset(p.x,p.y,p.z);
+	// 	node.finished = false;
+	// 	node.draw = true;
+	// 	node.pv.reset(random(-vs,vs),random(-vs,vs),random(-vs, vs));
+	// 	node.w = w * de;
+	// }
 
   // void add() {
   //   if (arm == ar.size()) {
@@ -54,16 +62,16 @@ abstract class ObjectPool<T> {
 
   void render() {
     for (int i = 0 ; i < arm ; i ++) {
-      ((Mob)ar.get(i)).render();
+      ar.get(i).render();
     }
   }
 
   void update() {
     for (int i = 0 ; i < arm ; i ++) {
-      ((Mob)ar.get(i)).update();
+      ar.get(i).update();
     }
     for (int i = 0 ; i < arm ; i ++) {
-      if (((Mob)ar.get(i)).finished) remove(i);
+      if (ar.get(i).finished) remove(i);
     }
   }
 }
@@ -151,9 +159,7 @@ abstract class MobF extends Mob {
   }
 }
 
-abstract class Mob {
-  boolean finished = false;
-  boolean draw = true;
+abstract class Mob extends Entity {
   Point p;
   Point pv = new Point(0,0,0);
   Point r = new Point(0,0,0);
@@ -196,6 +202,13 @@ abstract class Mob {
   void render() {
 
   }
+}
+
+abstract class Entity {
+  boolean finished = false;
+  boolean draw = true;
+  abstract void render();
+  abstract void update();
 }
 
 class Point {
@@ -296,7 +309,7 @@ class SpringValue {
   void update() {
     v *= vMult;
     if (index != -1) {
-      v += (X + xm - x)/mass;
+      v += (X + xm*av[index] - x)/mass;
     } else {
       v += (X - x)/mass;
     }
@@ -378,6 +391,10 @@ class IColor extends AColor {
     this.am = am;
   }
 
+  void setM(float rc, float gc, float bc) {
+  	this.setM(rc,gc,bc, this.ac);
+  }
+
   void setM(float r, float g, float b, float a, float i) {
     this.setM(r,g,b,a);
     this.index = (int)i;
@@ -388,6 +405,10 @@ class IColor extends AColor {
     this.gc = (int)gc; g.X = gc;
     this.bc = (int)bc; b.X = bc;
     this.ac = (int)ac; a.X = ac;
+  }
+
+  void setC(float rc, float gc, float bc) {
+  	this.setC(rc,gc,bc, this.ac);
   }
 
   void set(float rc, float gc, float bc, float ac, float rm, float gm, float bm, float am, float index) {

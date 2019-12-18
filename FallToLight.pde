@@ -11,8 +11,8 @@ float avg;
 // Events initialize and store all of their own mobs
 ArrayList<Event> events = new ArrayList<Event>();
 
-// Used to store global animation Mobs
-ArrayList<Mob> mobs = new ArrayList<Mob>();
+// Used to store global animation entities
+ArrayList<Entity> mobs = new ArrayList<Entity>();
 
 Camera cam;
 static int de;
@@ -29,7 +29,7 @@ static float fpb;
 static float cos60 = cos(PI/3);
 
 void setup() {
-  size(800,800,P3D);
+  size(1000,1000,P3D);
   de = (int)(min(width,height)*1);
   aw = (int)(4*de);
 
@@ -62,18 +62,18 @@ void draw() {
 
   render();
 
-  for (Mob mob : mobs) {
+  for (Entity mob : mobs) {
     if (mob.draw) mob.render();
   }
 
-  fill(255);
+  // fill(255);
   //drawBorders();
   //drawWidthBox(de);
-  drawPitches();
-  push();
-  translate(0,de*0.75,0);
-  text(currBeat + " " + (int)frameRate,0,0);
-  pop();
+  //drawPitches();
+  // push();
+  // translate(0,de*0.75,0);
+  // text(source.nodes.arm + " " + (int)frameRate,0,0);
+  // pop();
 }
 
 void update() {
@@ -109,7 +109,7 @@ void updateEvents() {
 }
 
 void updateMobs() {
-  for (Mob mob : mobs) {
+  for (Entity mob : mobs) {
     mob.update();
   }
   for (int i = 0 ; i < mobs.size() ; i ++) {
