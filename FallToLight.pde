@@ -172,6 +172,7 @@ void keyPressed() {
     println("Cam lock: " + cam.lock);
   } else {
     println("KEY: " + key + " " + currTime + " " + currBeat + " " + frameRate);
+    keyboardInput();
   }
 }
 

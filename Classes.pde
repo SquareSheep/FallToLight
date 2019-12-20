@@ -140,13 +140,13 @@ abstract class MobF extends Mob {
   void updatePoints() {
     super.updatePoints();
     fillStyle.update();
-    strokeStyle.update();
+    //strokeStyle.update();
   }
 
   void setDraw() {
     push();
     fillStyle.fillStyle();
-    strokeStyle.strokeStyle();
+    //strokeStyle.strokeStyle();
     translate(p.p.x, p.p.y, p.p.z);
     rotateX(rang.p.x);
     rotateY(rang.p.y);

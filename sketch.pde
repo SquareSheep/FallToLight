@@ -22,10 +22,10 @@ static float bpm = 130;
 static int threshold = 50;
 static int offset = 0;
 static int binCount = 144;
-static float defaultMass = 20;
+static float defaultMass = 30;
 static float defaultVMult = 0.5;
-static float fillMass = 10;
-static float fillVMult = 0.35;
+static float fillMass = 5;
+static float fillVMult = 0.5;
 static float fftThreshold = 1.5;
 static float fftPow = 1.3;
 static float fftAmp = 5;
@@ -35,7 +35,7 @@ static String songName = "../Music/falltolight.mp3";
 IColor defaultFill = new IColor(0,0,0,0, 5,5,5,5,-1);
 IColor defaultStroke = new IColor(0,0,0,0, 5,5,5,5,-1);
 
-Source source;
+FallingLight source;
 
 void render() {
 	
@@ -45,13 +45,23 @@ void addEvents() {
 	
 }
 
+void keyboardInput() {
+	if (key == '1') {
+		source.nodes.currPGraph = 0;
+	} else if (key == '2') {
+		source.nodes.currPGraph = 1;
+	}
+}
+
 void setSketch() {
-	source = new Source(new PVector(0,0,0));
+	source = new FallingLight(0,0,0, de*0.5,de*0.5,de*0.1);
 	mobs.add(source);
 
-	strokeWeight(1);
+	strokeWeight(6);
 	strokeCap(ROUND);
 	strokeJoin(MITER);
-	front = new PVector(de,de,de*0.5);
-  	back = new PVector(-de,-de,-de*0.5);
+	noStroke();
+	float mult = 0.75;
+	front = new PVector(de*mult,de*mult,de*mult);
+  	back = new PVector(-de*mult,-de*mult,-de*mult);
 }
